@@ -56,7 +56,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Java JDK
         uses: actions/setup-java@v4
@@ -65,7 +65,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Run espresso Tests
-        uses: reactivecircus/android-emulator-runner@v4
+        uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 34
           script: ./gradlew connectedCheck
