@@ -23,8 +23,32 @@ jobs:
       - name: Run Lint
         run: ./gradlew lintDebug
 
-      - name: Upload a html test report
+      - name: Upload a html lint test report
         uses: actions/upload-artifact@v4
         with:
-          name: index.html
+          name: lint.html
           path: app/build/reports/lint-results-debug.html
+
+  unit-test:
+    needs: [lint]
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Run Tests
+        run: ./gradlew test
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit_test_report.html
+          path: app/build/reports/tests/testDebugUnitTest/
+
+
