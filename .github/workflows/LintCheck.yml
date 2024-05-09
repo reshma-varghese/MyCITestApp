@@ -51,4 +51,30 @@ jobs:
           name: unit_test_report.html
           path: app/build/reports/tests/testDebugUnitTest/
 
+  instrumentation-test:
+    needs: [unit-test]
+    runs-on: macos-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Run espresso Tests
+        uses: reactivecircus/android-emulator-runner@v4
+        with:
+          api-level: 34
+          script: ./gradlew connectedCheck
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: instrumentation_test_report.html
+          path: app/build/reports/AndroidTests/connected/
+
+
 
